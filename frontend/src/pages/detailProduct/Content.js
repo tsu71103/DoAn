@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { GET_ALL, GET_ID } from "../api/apiService";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 const cardTextStyle = {
   maxWidth: "80%",
 };
 
-const Content = () => {
+const Content = ( ) => {
   const [product, setProduct] = useState({});
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
+
+  const [cartItems, setCartItems] = useState([])
+
   
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -15,7 +19,57 @@ const Content = () => {
   useEffect(() => {
     GET_ALL(`products`).then((item) => setProducts(item.data));
     GET_ID(`products`, productId).then((item) => setProduct(item.data));
+    const storedCartItems = localStorage.getItem("cartItems") || "[]";
+    setCartItems(JSON.parse(storedCartItems));
   }, [productId]);
+  const handleAddToCart = () => {
+		// Check if product is defined and has an id
+		if (!product || !product.id) {
+		  console.error('Product is not defined or does not have an id.');
+		  return;
+		}
+	
+		const existingItemIndex = cartItems.findIndex((item) => item.id === product.id);
+	
+		if (existingItemIndex !== -1) {
+		  const updatedCartItems = [...cartItems];
+		  updatedCartItems[existingItemIndex].quantity += quantity;
+		  setCartItems(updatedCartItems);
+		  localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+		} else {
+		  const cartItem = {
+			id: product.id,
+			title: product.title,
+			price: product.price,
+			quantity: quantity,
+			thumbnail: product.thumbnail,
+		  };
+	
+		  setCartItems((prevCartItems) => [...prevCartItems, cartItem]);
+		  localStorage.setItem('cartItems', JSON.stringify([...cartItems, cartItem]));
+		}
+	
+		// Reset quantity to 1 after adding to cart
+		setQuantity(1);
+		window.location.reload();
+
+	
+		// Show success message (you can implement this as per your UI)
+		alert('Product added to cart successfully!');
+	  };
+	const [quantity, setQuantity] = useState(1);
+	const handleIncreaseQuantity = () => {
+		setQuantity(quantity + 1);
+	  };
+	
+	  const handleDecreaseQuantity = () => {
+		setQuantity(quantity - 1);
+	  };
+	  useEffect(() => {
+      // Cập nhật `localStorage` khi giỏ hàng thay đổi
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      }, [cartItems]);
+	  
   return (
     <section>
       <section className="py-3 bg-light">
@@ -119,31 +173,20 @@ const Content = () => {
                   <div className="form-group col-md flex-grow-0">
                     <div className="input-group mb-3 input-spinner">
                       <div className="input-group-prepend">
-                        <button
-                          className="btn btn-light"
-                          type="button"
-                          id="button-plus"
-                        >
-                          +{" "}
-                        </button>
+                      <button onClick={handleIncreaseQuantity}>+</button>
                       </div>
-                      <input type="text" className="form-control" value="1" />
+                      <input type="number" class="form-group" value={quantity} onChange={(e) => setQuantity(e.target.value)}  />
                       <div className="input-group-append">
-                        <button
-                          className="btn btn-light"
-                          type="button"
-                          id="button-minus"
-                        >
-                          &minus;{" "}
-                        </button>
+                      <button onClick={handleDecreaseQuantity}>-</button>
                       </div>
                     </div>
                   </div>
                   
                   <div className="form-group col-md">
-                    <a href="profile/order" className="btn btn-primary">
+                    <a className="btn btn-primary">
                       <i className="fas fa-shopping-cart"></i>{" "}
-                      <span className="text">Add to cart</span>
+                    
+                      <span onClick={handleAddToCart}>Thêm vào giỏ hàng</span>
                     </a>
                     <a href="#" className="btn btn-light">
                       <i className="fas fa-envelope"></i>{" "}

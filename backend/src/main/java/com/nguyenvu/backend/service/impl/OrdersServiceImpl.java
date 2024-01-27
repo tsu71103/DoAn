@@ -47,6 +47,7 @@ public class OrdersServiceImpl implements OrderService {
 @Override
       public Orders updateOrders(Orders Orders){
         Orders existingOrders = galleryRepository.findById(Orders.getId()).get();
+        existingOrders.setImage(Orders.getImage());
         existingOrders.setFullname(Orders.getFullname());
          existingOrders.setEmail(Orders.getEmail());
          existingOrders.setPhone_number(Orders.getPhone_number());

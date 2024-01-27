@@ -12,42 +12,85 @@ class Footer extends Component {
 		<section class="footer-top padding-y-lg text-white">
 			<div class="row">
 				<aside class="col-md col-6">
-					<h6 class="title">Brands</h6>
+					
+				<h5>Về chúng tôi</h5>
+            <p>
+              <span style={{ fontsize: "90%" }}>
+                Website chính thức và duy nhất của MixiShop. Hiện tại chúng mình
+                chỉ nhận đơn hàng trên website chứ không nhận bất kỳ nơi nào
+                khác nhé!
+              </span>
+            </p>
+				</aside>
+				<aside class="col-md col-6">
+					
+				<h5>Danh mục sản phẩm</h5>
 					<ul class="list-unstyled">
-						<li> <a href="#">Adidas</a></li>
-						<li> <a href="#">Puma</a></li>
-						<li> <a href="#">Reebok</a></li>
-						<li> <a href="#">Nike</a></li>
+					<li>
+                      <a href="https://shop.mixigaming.com/danh-muc/ao-csgo/">
+                        Áo CSGO
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://shop.mixigaming.com/danh-muc/ao-mixi/">
+                        Áo Mixi
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://shop.mixigaming.com/danh-muc/ao-pubg/">
+                        Áo PUBG
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://shop.mixigaming.com/danh-muc/ao-refund-gaming/">
+                        Áo Refund Gaming
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://shop.mixigaming.com/danh-muc/do-luu-niem-mixi/">
+                        Đồ lưu niệm Mixi
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://shop.mixigaming.com/danh-muc/ao-ba-lo/">
+                        Áo ba lỗ
+                      </a>
+                    </li>
 					</ul>
 				</aside>
 				<aside class="col-md col-6">
-					<h6 class="title">Company</h6>
+				<h5>Thông tin</h5>
 					<ul class="list-unstyled">
-						<li> <a href="#">About us</a></li>
-						<li> <a href="#">Career</a></li>
-						<li> <a href="#">Find a store</a></li>
-						<li> <a href="#">Rules and terms</a></li>
-						<li> <a href="#">Sitemap</a></li>
+					<li>
+                      <a href="https://shop.mixigaming.com/gioi-thieu/">
+                        Giới thiệu
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://shop.mixigaming.com/chinh-sach-bao-mat/">
+                        Chính sách bảo mật
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://shop.mixigaming.com/dieu-khoan/">
+                        Điều khoản&nbsp;
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://shop.mixigaming.com/sitemap_index.xml">
+                        Sitemap
+                      </a>
+                    </li>
 					</ul>
 				</aside>
 				<aside class="col-md col-6">
-					<h6 class="title">Help</h6>
-					<ul class="list-unstyled">
-						<li> <a href="#">Contact us</a></li>
-						<li> <a href="#">Money refund</a></li>
-						<li> <a href="#">Order status</a></li>
-						<li> <a href="#">Shipping info</a></li>
-						<li> <a href="#">Open dispute</a></li>
-					</ul>
-				</aside>
-				<aside class="col-md col-6">
-					<h6 class="title">Account</h6>
-					<ul class="list-unstyled">
-						<li> <a href="#"> User Login </a></li>
-						<li> <a href="#"> User register </a></li>
-						<li> <a href="#"> Account Setting </a></li>
-						<li> <a href="#"> My Orders </a></li>
-					</ul>
+				<h5>Hỗ trợ</h5>
+            <p>
+              <span style={{ fontsize: "90%" }}>
+                Mọi thắc mắc và góp ý cần hỗ trợ xin vui lòng liên hệ Fanpage và
+                Instagram
+              </span>
+            </p>
 				</aside>
 				<aside class="col-md">
 					<h6 class="title">Social</h6>
@@ -61,12 +104,7 @@ class Footer extends Component {
 			</div> 
 		</section>	
 
-		<section class="footer-bottom text-center">
 		
-				<p class="text-white">Privacy Policy - Terms of Use - User Information Legal Enquiry Guide</p>
-				<p class="text-muted"> &copy 2019 Company name, All rights reserved </p>
-				
-		</section>
 	</div>
 </footer>
 

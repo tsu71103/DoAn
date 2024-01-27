@@ -1,8 +1,11 @@
 
 
 
-import React from "react";
-const Address = () =>(
+import axios from "axios";
+import React, { useState } from "react";
+function Address() {
+
+    return (
     <section class="section-content padding-y">
 	<div class="container">
 	
@@ -15,7 +18,8 @@ const Address = () =>(
 			<a class="list-group-item" href="/profile/wishlist"> My wishlist </a>
 			<a class="list-group-item" href="/profile/seller"> My Selling Items </a>
 			<a class="list-group-item" href="/profile/setting"> Settings </a>
-			<a class="list-group-item" href="/"> Log out </a>
+    
+            
 		
 		</nav>
 	</aside> 
@@ -52,5 +56,5 @@ const Address = () =>(
 
 </div> 
 </section>
-);
+);};
 export default Address

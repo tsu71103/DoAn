@@ -1,74 +1,95 @@
-import React, { Component, useEffect, useState } from "react";
-import logo from "../assets/images/logo06.png";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { GET_ALL } from "../pages/api/apiService";
+import MenuList from "../pages/menu/Menulist";
+import Search from "../pages/search/Search";
+
 function Header() {
+  const fullname = localStorage.getItem("fullname");
+
+  const handleLogout = () => {
+    // Xóa token khỏi localStorage
+    localStorage.removeItem("token");
+    localStorage.removeItem("fullname");
+
+    // Thực hiện các xử lý khác nếu cần thiết (ví dụ: chuyển hướng người dùng)
+    // ...
+
+    // Hiển thị thông báo đăng xuất thành công (tuỳ chọn)
+    alert("Logout successful");
+    window.location.reload();
+  };
+
+  const [cartItems, setCartItems] = useState([]);
+  useEffect(() => {
+    // Lấy thông tin giỏ hàng từ localStorage hoặc API
+    const storedCartItems = localStorage.getItem("cartItems") || "[]";
+    const parsedCartItems = JSON.parse(storedCartItems);
+    setCartItems(parsedCartItems);
+  }, []);
+
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     GET_ALL(`categories`).then((item) => setCategories(item.data));
   }, []);
+
+  const [menus, setMenus] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/Menus")
+      .then((response) => {
+        setMenus(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching menus: ", error);
+      });
+  }, []);
+
   return (
-    <header class="section-header">
-      <section class="header-main border-bottom">
-        <div class="container">
-          <div class="row align-items-center">
-            <div class="col-xl-2 col-lg-3 col-md-12">
-              <a href="/" class="brand-wrap">
-                <img class="logo" src={logo} />
+    <header className="section-header">
+      <section className="header-main border-bottom">
+        <div className="container">
+          <div className="row align-items-center">
+            <div id="logo" className="flex-col logo">
+              <a href="/" title="MixiShop - MixiShop" rel="home">
+                <img
+                  width="151"
+                  height="100"
+                  src="https://shop.mixigaming.com/wp-content/uploads/2019/06/logo-mixi-tét.png"
+                  className="header-logo-dark"
+                  alt="MixiShop"
+                />
               </a>
             </div>
-            <div class="col-xl-6 col-lg-5 col-md-6">
-              <form action="#" class="form-group">
-                <div class="input-group w-100">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Search"
-                  />
+            <Search />
+            <div className="col-xl-4 col-lg-4 col-md-6">
+              <div className="widgets-wrap float-md-right">
+              <div className="widget-header mr-3">
+  {fullname ? (
+    <>
+      
+      <small className="text">Xin chào: {fullname}</small>{" "}
+      <small className="center" onClick={handleLogout}>
+        <i className="fas fa-sign-out-alt padding-20"></i> Đăng xuất
+      </small>
+    </>
+    
+  ) : (
+    <a href="/login" className="widget-view">
+      <div className="icon-area">
+        <i className="fa fa-user"></i>
+      </div>
+      <small className="text">Login</small>
+    </a>
+  )}
+</div>
 
-                  <div class="input-group-append">
-                    <button type="button" class="btn btn">
-                      <i class="fa fa-search"></i>
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div class="col-xl-4 col-lg-4 col-md-6">
-              <div class="widgets-wrap float-md-right">
-              <div class="widget-header mr-3">
-                  <a href="/login" class="widget-view">
-                    <div class="icon-area">
-                      <i class="fa fa-user"></i>
-                      <span class="notify">3</span>
-                    </div>
-                    <small class="text"> Login </small>
-                  </a>
-                </div>
-                <div class="widget-header mr-3">
-                  <a href="/logout" class="widget-view">
-                    <div class="icon-area">
-                      <i class="fa fa-user"></i>
-                      <span class="notify">3</span>
-                    </div>
-                    <small class="text"> Logout </small>
-                  </a>
-                </div>
-                
-                <div class="widget-header mr-3">
-                  <a href="/profile/main" class="widget-view">
-                    <div class="icon-area">
-                      <i class="fa fa-user"></i>
-                      <span class="notify">3</span>
-                    </div>
-                    <small class="text"> My profile </small>
-                  </a>
-                </div>
-                
+
+
                 <div class="widget-header mr-3">
                   <a href="#" class="widget-view">
                     <div class="icon-area">
                       <i class="fa fa-comment-dots"></i>
-                      <span class="notify">1</span>
                     </div>
                     <small class="text"> Message </small>
                   </a>
@@ -85,6 +106,7 @@ function Header() {
                   <a href="/shopping/cart" class="widget-view">
                     <div class="icon-area">
                       <i class="fa fa-shopping-cart"></i>
+                      <span class="notify">{cartItems.length}</span>
                     </div>
                     <small class="text"> Cart </small>
                   </a>
@@ -123,58 +145,22 @@ function Header() {
                 <div class="dropdown-menu dropdown-large">
                   <nav class="row">
                     <div class="col-6">
-                    {categories.length >
-0 &&
-categories.map((row) => (
-<a
-class="dropdown-item"
-href={`/listing?categoryId=${row.id}`}
->
-{row.name}
-</a>
-))}
-                      <a class="dropdown-item" href="/listing">
-                        Tất cả sản phẩm
-                      </a>
-                      {/* <a href="page-listing-grid.html">Áo PUBG</a>
-                                <a href="page-shopping-cart.html">Áo CSGO</a>
-                                <a href="page-detail-product.html">Áo LOL</a> */}
+                      {categories.length > 0 &&
+                        categories.map((row) => (
+                          <a
+                            class="dropdown-item"
+                            href={`/listing?categoryId=${row.id}`}
+                          >
+                            {row.name}
+                          </a>
+                        ))}
+                   
                     </div>
                   </nav>
                 </div>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  Thông Báo
-                </a>
-              </li>
-          
-              
-            </ul>
-            <ul class="navbar-nav ml-md-auto">
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="http://example.com"
-                  data-toggle="dropdown"
-                >
-                  English
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                  <a class="dropdown-item" href="#">
-                    Russian
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    French
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    Spanish
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    Chinese
-                  </a>
-                </div>
-              </li>
+
+              <MenuList />
             </ul>
           </div>
         </div>

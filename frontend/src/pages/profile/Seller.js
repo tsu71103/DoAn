@@ -21,7 +21,7 @@ const Seller = () =>(
 			<a class="list-group-item" href="/profile/wishlist"> My wishlist </a>
 			<a class="list-group-item active" href="/profile/seller"> My Selling Items </a>
 			<a class="list-group-item" href="/profile/setting"> Settings </a>
-			<a class="list-group-item" href="/"> Log out </a>
+		
 			
 		</nav>
 	</aside> 

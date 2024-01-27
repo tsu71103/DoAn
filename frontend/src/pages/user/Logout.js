@@ -5,23 +5,26 @@ import { useNavigate } from "react-router-dom";
 const Logout = () => {
     const navigate = useNavigate();
 
-    const handleLogout = async () => {
-        try {
-            // Gọi API để thực hiện logout từ server
-            await axios.post("http://localhost:8080/api/users/logout");
+    const handleLogout = () => {
+        // Xóa token khỏi localStorage
+        localStorage.removeItem("token");
+        localStorage.removeItem("fullname");
 
-            // Điều hướng đến trang đăng nhập hoặc trang chính (tùy thuộc vào yêu cầu của bạn)
-            navigate('/login');
-        } catch (error) {
-            console.error("Logout failed:", error);
-            // Xử lý lỗi nếu cần
-        }
+        // Thực hiện các xử lý khác nếu cần thiết (ví dụ: chuyển hướng người dùng)
+        // ...
+
+        // Hiển thị thông báo đăng xuất thành công (tuỳ chọn)
+        alert("Logout successful");
+
+        // Chuyển hướng người dùng (ví dụ: trở về trang đăng nhập)
+        navigate("/");
+   
     };
 
     return (
-        <div>
-            <button onClick={handleLogout}>Logout</button>
-        </div>
+            <div>
+                 <button onClick={handleLogout}>Logout</button>
+            </div>
     );
 };
 

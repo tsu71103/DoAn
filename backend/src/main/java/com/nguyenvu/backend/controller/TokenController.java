@@ -20,17 +20,14 @@ import java.util.List;
 
 @RequestMapping("api/tokens")
 public class TokenController{
-    private TokenService productService;
+    private TokenService tokenService;
     // Create Token REST API
 
-@PostMapping
-
-public ResponseEntity<Token> createToken(@RequestBody Token Token) {
-Token savedToken = productService.createToken(Token);
-return new ResponseEntity<>(savedToken, HttpStatus.CREATED);
-
-
-}
+    @PostMapping
+    public ResponseEntity<Token> createToken(@RequestBody Token token) {
+        Token savedToken = tokenService.createToken(token);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedToken);
+    }
 // Get Token by id REST API
 
 // http://1ocalhost:8080/api/Tokens/1
@@ -38,7 +35,7 @@ return new ResponseEntity<>(savedToken, HttpStatus.CREATED);
 @GetMapping("{id}")
 
 public ResponseEntity<Token> getTokenById(@PathVariable("id") Long TokenId) {
-Token Token = productService.getTokenById(TokenId);
+Token Token = tokenService.getTokenById(TokenId);
 return new ResponseEntity<>(Token, HttpStatus.OK);
 }
 // Get All Tokens REST API
@@ -48,7 +45,7 @@ return new ResponseEntity<>(Token, HttpStatus.OK);
 @GetMapping
 
 public ResponseEntity<List<Token>> getAllTokens() {
-List<Token> Tokens = productService.getAllTokens();
+List<Token> Tokens = tokenService.getAllTokens();
 HttpHeaders headers = new HttpHeaders();
 headers.add("Content-Range", "item 0-"+ Tokens.size()+"/"+Tokens.size());
 return ResponseEntity.ok().headers(headers).body(Tokens);
@@ -62,7 +59,7 @@ return ResponseEntity.ok().headers(headers).body(Tokens);
 public ResponseEntity<Token> updateToken(@PathVariable("id") Long TokenId,
 @RequestBody Token Token) {
 Token.setId(TokenId);
-Token updatedToken = productService.updateToken(Token);
+Token updatedToken = tokenService.updateToken(Token);
 return new ResponseEntity<>(updatedToken, HttpStatus.OK);
 }
 // Delete Token REST API
@@ -70,7 +67,7 @@ return new ResponseEntity<>(updatedToken, HttpStatus.OK);
 @DeleteMapping("{id}")
 
 public ResponseEntity<String> deleteToken(@PathVariable("id") Long TokenId) {
-productService.deleteToken(TokenId);
+tokenService.deleteToken(TokenId);
 return new ResponseEntity<>("Token successfully deleted!", HttpStatus.OK);
 }
 }

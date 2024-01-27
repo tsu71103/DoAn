@@ -1,17 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import Content from "../pages/detailProduct/Content";
+import Cart from "../pages/shopping/Cart";
 import Subscribe from "../pages/home/Subscribe";
-import Description from "../pages/detailProduct/Description";
-import Inbox from "../pages/detailProduct/Inbox";
-const DetailProduct = () =>(
-    <>
-    <div class="container">
-        
-        <Content/>
-        {/* <Description/>
-        <Inbox/> */}
+
+
+
+const DetailProduct = () => {
+    const [cart, setCart] = useState([]);
+
+    const addToCart = (product) => {
+        const existingItemIndex = cart.findIndex((item) => item.id === product.id);
+      
+        if (existingItemIndex !== -1) {
+          // Nếu sản phẩm đã có trong giỏ hàng, cập nhật số lượng
+          const updatedCart = [...cart];
+          updatedCart[existingItemIndex].quantity += 1;
+          setCart(updatedCart);
+        } else {
+          // Nếu sản phẩm chưa có trong giỏ hàng, thêm vào
+          setCart((prevCart) => [
+            ...prevCart,
+            {
+              id: product.id,
+              name: product.name,
+              image: product.image, // Thêm URL hình ảnh ở đây
+              quantity: 1,
+              price: product.price,
+              // Thêm các chi tiết sản phẩm khác nếu cần
+            },
+          ]);
+        }
+      };
+
+return(
+    <div>
+      <Content addToCart={addToCart} />
+      <Cart cart={cart} />
+      <Subscribe/>
     </div>
-    <Subscribe/>
-    </>
-)
+    
+  );
+};
 export default DetailProduct

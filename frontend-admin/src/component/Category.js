@@ -9,12 +9,13 @@ import {
     TextInput,
     Create,
     SelectInput,
+    required,
 
 
 } from "react-admin";
 
 export  const listCategory = (props) =>(
-    <List {...props}>
+    <List {...props} sortBy="id" sortOrder="ASC">
         <Datagrid>
             <TextField source ="id"/>
             <TextField source ="name"/>
@@ -28,30 +29,34 @@ export  const listCategory = (props) =>(
 export  const editCategory = (props) =>(
 
     
-    <Edit {...props}> 
+    <Edit {...props}>
     <SimpleForm>
-    <TextInput source="name"/>
-    <SelectInput source="isHome"  choices={[
-        {id:1,name:'hien thi o trang chu',value:1},
-        {id:2,name:'an khoi trang chu',value:0},
-    ]}defaultValue={0}/>
+      <TextInput source="name" validate={required()} /> {/* Áp dụng ràng buộc */}
+      <SelectInput
+        source="isHome"
+        choices={[
+          { id: 1, name: "Hiển thị ở trang chủ", value: 1 },
+          { id: 2, name: "Ẩn khỏi trang chủ", value: 0 },
+        ]}
+        defaultValue={0}
+      />
     </SimpleForm>
-    </Edit>
+  </Edit>
     
 );
 
-export  const createCategory = (props) =>(
-    <Create {...props}>
-   
-        <SimpleForm>
-        <TextInput source="name"/>
-    <SelectInput source="isHome"  choices={[
-        {id:1,name:'hien thi o trang chu',value:1},
-        {id:2,name:'an khoi trang chu',value:0},
-    ]}defaultValue={0}/>
-        </SimpleForm>
-    </Create>
-    
-    
-
+export const createCategory = (props) => (
+  <Create {...props}>
+    <SimpleForm>
+      <TextInput source="name" validate={required()} /> {/* Áp dụng ràng buộc */}
+      <SelectInput
+        source="isHome"
+        choices={[
+          { id: 1, name: "Hiển thị ở trang chủ", value: 1 },
+          { id: 2, name: "Ẩn khỏi trang chủ", value: 0 },
+        ]}
+        defaultValue={0}
+      />
+    </SimpleForm>
+  </Create>
 );

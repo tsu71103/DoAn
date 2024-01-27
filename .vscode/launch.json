@@ -4,6 +4,13 @@
             "type": "java",
             "name": "BackendApplication",
             "request": "launch",
+            "mainClass": "com.nguyenvu.backend.BackendApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
+            "name": "BackendApplication",
+            "request": "launch",
             "mainClass": "BackendApplication",
             "projectName": "backend"
         },

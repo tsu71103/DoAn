@@ -10,4 +10,5 @@ import com.nguyenvu.backend.entity.Token;
 
 public interface TokenRepository extends JpaRepository<Token, Long> {
     
+    
 }

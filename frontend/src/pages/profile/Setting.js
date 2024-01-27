@@ -12,7 +12,7 @@ const Setting = () =>(
 			<a class="list-group-item" href="/profile/wishlist"> My wishlist </a>
 			<a class="list-group-item" href="/profile/seller"> My Selling Items </a>
 			<a class="list-group-item active" href="/profile/setting"> Settings </a>
-			<a class="list-group-item" href="/"> Log out </a>
+	
 		</nav>
 	</aside> 
 	<main class="col-md-9">

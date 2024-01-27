@@ -20,7 +20,7 @@ import { createRole, editRole, listRole } from './component/Role';
 import { createToken, editToken, listToken } from './component/Token';
 import { createUser, editUser, listUser } from './component/User';
 import dataProvider from "./component/CustomDataProvider";
-const httpClient = fetchUtils.fetchJson;
+
 
 const App = () =>(
 <Admin dashboard={AdminPanel} dataProvider={dataProvider}>

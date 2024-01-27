@@ -14,7 +14,7 @@ ReferenceInput,
 SelectInput,
 } from "react-admin";
 export const listProduct = (props) => (
-<List {...props}>
+<List {...props} sortBy="id" sortOrder="ASC">
 <Datagrid style={{ overflowX: "auto" }}>
 <TextField source="id" />
 <TextField source="title" />

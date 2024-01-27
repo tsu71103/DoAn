@@ -14,8 +14,11 @@ import com.nguyenvu.backend.entity.User;
 import com.nguyenvu.backend.repository.UserRepository;
 import com.nguyenvu.backend.service.UserService;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +28,7 @@ import java.util.Optional;
 
 @RequestMapping("/api/users")
 public class UserController {
+    private static final byte[] SECRET_KEY = null;
     @Autowired
     private UserRepository userRepository;
     private UserService productService;
@@ -89,21 +93,48 @@ public ResponseEntity register(@RequestBody User user) {
 }
 @PostMapping("/login")
 public ResponseEntity<?> login(@RequestBody User user) {
-    Optional<User> existingUser = userRepository.findByFullnameAndPassword(user.getFullname(), user.getPassword());
+    try {
+        // Thực hiện băm mật khẩu và thêm muối
+        Optional<User> existingUser = userRepository.findByFullnameAndPassword(user.getFullname(), user.getPassword());
 
-    if (existingUser.isPresent()) {
-        return ResponseEntity.ok("Login successful");
-    } else {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
+        if (existingUser.isPresent()) {
+            // Tạo và trả về một JWT khi đăng nhập thành công
+            String token = generateJwt(existingUser.get());
+            return ResponseEntity.ok().body(token);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Đăng nhập thất bại");
+        }
+    } catch (Exception e) {
+        // Xử lý ngoại lệ và trả về thông báo lỗi phù hợp
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi trong quá trình đăng nhập");
     }
 }
-   @PostMapping("/logout")
-    public ResponseEntity logout(HttpServletRequest request) {
-        // Thực hiện logic logout ở đây
-        // Ví dụ: invalidate session
+
+ public static String generateJwt(User user) {
+        Date now = new Date();
+        Date expiration = new Date(now.getTime() + 86400000); // 1 ngày
+
+        String token = Jwts.builder()
+                .setSubject(user.getFullname())
+                .setIssuedAt(now)
+                .setExpiration(expiration)
+                // .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .compact();
+
+        return token;
+    }
+
+@PostMapping("/logout")
+public ResponseEntity<?> logout(HttpServletRequest request) {
+    try {
+        // Thực hiện logic đăng xuất tùy chỉnh ở đây (ví dụ: hủy phiên)
         request.getSession().invalidate();
         return ResponseEntity.ok().build();
+    } catch (Exception e) {
+        // Xử lý ngoại lệ và trả về thông báo lỗi phù hợp
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi trong quá trình đăng xuất");
     }
+}
 
 
     

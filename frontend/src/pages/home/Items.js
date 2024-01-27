@@ -33,7 +33,7 @@ const Items = (product) => {
                       {row.title}
                     </Link>
                   </div>
-                  <div class="price h5 mt-2">{row.price}</div>
+                  <div class="price h5 mt-2">${row.price}</div>
                 </figcaption>
               </div>
             </div>

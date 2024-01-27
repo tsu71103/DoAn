@@ -17,6 +17,9 @@ import UserLogin from "./UserLogin";
 import UserRegister from "./UserRegister";
 import UserLocalStorage from "./UserLocalStorage";
 import UserLogout from "./Logout";
+import Information from "./Infor";
+import FormCart from "./ShoppingFormCart";
+import SearchResultsPage from "../pages/search/SearchResultPage";
 const Main = () =>(
     <main>
         <Routes>
@@ -37,6 +40,9 @@ const Main = () =>(
             <Route path="/logout"element={<UserLogout/>}/>
             <Route path="/register"element={<UserRegister/>}/>
             <Route path="/localstorage"element={<UserLocalStorage/>}/>
+            <Route path="/information"element={<Information/>}/>
+            <Route path="/formcart"element={<FormCart/>}/>
+            <Route path="/search-page"element={<SearchResultsPage/>}/>
         </Routes>
     </main>
 )
